@@ -1,7 +1,7 @@
 name: shapefile
 version: 1.0.0
 description: A cross-platform streaming parser for the ESRI Shapefile spatial data format.
-repository: https://github.com/SBanksX/shapefile
+repository: https://github.com/luizbarboza/shapefile
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
