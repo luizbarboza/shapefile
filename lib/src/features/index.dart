@@ -11,11 +11,13 @@ import '../geometries/index.dart';
 ///
 /// The follwing option are supported: `encoding` - the dBASE character
 /// encoding; defaults to “UTF-8”
-Stream<Map<String, dynamic>> features(Stream<List<int>> shp,
-    {Stream<List<int>>? dbf,
-    Encoding encoding = utf8,
-    void Function(List<double>)? forBbox}) {
-  var streams = [geometries(shp, forBbox: forBbox)];
+Stream<Map<String, dynamic>> features(
+  Stream<List<int>> shp, {
+  Stream<List<int>>? dbf,
+  Encoding encoding = utf8,
+  void Function(List<double>)? forBbox,
+}) {
+  final streams = [geometries(shp, forBbox: forBbox)];
   if (dbf != null) streams.add(data(dbf, encoding: encoding));
   return StreamZip(streams).map((results) => {
         "type": "Feature",
@@ -43,12 +45,18 @@ Stream<Map<String, dynamic>> features(Stream<List<int>> shp,
 /// [Proj4js](https://github.com/proj4js/proj4js) for parsing
 /// [well-known text (WKT)](https://en.wikipedia.org/wiki/Well-known_text#Coordinate_reference_system)
 /// specifications.
-Future<Map<String, dynamic>> featureCollection(Stream<List<int>> shp,
-    {Stream<List<int>>? dbf, Encoding encoding = utf8}) async {
-  var collection = <String, dynamic>{
+Future<Map<String, dynamic>> featureCollection(
+  Stream<List<int>> shp, {
+  Stream<List<int>>? dbf,
+  Encoding encoding = utf8,
+}) async {
+  final collection = <String, dynamic>{
     "type": "FeatureCollection",
   };
-  collection["features"] = await features(shp,
-      dbf: dbf, forBbox: (bbox) => collection["bbox"] = bbox).toList();
+  collection["features"] = await features(
+    shp,
+    dbf: dbf,
+    forBbox: (bbox) => collection["bbox"] = bbox,
+  ).toList();
   return collection;
 }

@@ -25,8 +25,10 @@ Map<String, Function> _types = {
 /// shapefile.
 ///
 /// The [source] must be a chunked byte-stream.
-Stream<Map<String, dynamic>> data(Stream<List<int>> source,
-    {Encoding encoding = utf8}) async* {
+Stream<Map<String, dynamic>> data(
+  Stream<List<int>> source, {
+  Encoding encoding = utf8,
+}) async* {
   var r = ChunkedStreamReader(source),
       head = ByteData.sublistView(await r.readBytes(32)),
       body = ByteData.sublistView(
