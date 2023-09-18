@@ -57,6 +57,7 @@ Future<Map<String, dynamic>> featureCollection(
     shp,
     dbf: dbf,
     forBbox: (bbox) => collection["bbox"] = bbox,
+    encoding: encoding,
   ).toList();
   return collection;
 }
